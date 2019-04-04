@@ -1,0 +1,31 @@
+{
+  "name": "license-scan-utilities",
+  "version": "0.0.1-0",
+  "description": "Supporting functionality for the Jenkins Pipeline",
+  "main": "index.js",
+  "scripts": {
+    "get_and_clone": "node src/get_and_clone_zowe_repos.js",
+    "install_and_scan_deps": "node src/install_and_scan_deps.js",
+    "scancode": "echo \"Not yet Implemented\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markackert/dependency-license-scan.git"
+  },
+  "author": "Mark Ackert",
+  "license": "EPL-2.0",
+  "bugs": {
+    "url": "https://github.com/markackert/dependency-license-scan/issues"
+  },
+  "homepage": "https://github.com/markackert/dependency-license-scan#readme",
+  "devDependencies": {
+    "@octokit/rest": "16.13.1",
+    "@octokit/plugin-retry": "2.1.1",
+    "adm-zip": "0.4.13",
+    "async": "2.6.1",
+    "cross-spawn": "6.0.5",
+    "download": "7.1.0",
+    "rimraf": "2.6.3",
+    "simple-git": "1.107.0"
+  }
+}
