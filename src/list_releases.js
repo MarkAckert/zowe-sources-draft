@@ -20,6 +20,7 @@ octokit.hook.error('request', async (error, options) => {
 */
 // Git clone is pretty inexpensive
 const PARALLEL_CLONE_COUNT = 4;
+const API_TOKEN = fs.readFileSync("resources/git_credential.txt").toString();
 
 const whitelistRepos = fs.readFileSync("rules/repoList.txt", 'utf-8').split(/\r\n|\r|\n/g);
 const releaseMap = [];
@@ -32,7 +33,7 @@ const getReleasesFn = async function (repository) {
         repo: repository,
         per_page: 999,
         userAgent: 'octoki/rest.js 16.13.1',
-        headers: { 'Authorization' : 'Basic ***REMOVED***' }
+        headers: { 'Authorization' : `Basic ${API_TOKEN}` }
     }).then((data, status, headers) => {
       //  console.log(data);
      //   console.log("GIT RESPONSE: " + JSON.stringify(gitResponse));
