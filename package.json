@@ -1,31 +1,33 @@
 {
-  "name": "license-scan-utilities",
-  "version": "0.0.1-0",
-  "description": "Supporting functionality for the Jenkins Pipeline",
-  "main": "index.js",
-  "scripts": {
-    "get_and_clone": "node src/get_and_clone_zowe_repos.js",
-    "install_and_scan_deps": "node src/install_and_scan_deps.js",
-    "scancode": "echo \"Not yet Implemented\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/markackert/dependency-license-scan.git"
-  },
-  "author": "Mark Ackert",
+  "name": "zowe-sourceball",
+  "version": "0.0.1",
+  "description": "Takes source code for Zowe components at a given tag level, and builds a sourceball.",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "author": "mark.ackert@broadcom.com",
   "license": "EPL-2.0",
-  "bugs": {
-    "url": "https://github.com/markackert/dependency-license-scan/issues"
+  "private": true,
+  "dependencies": {
+    "@octokit/rest": "^16.17.0",
+    "adm-zip": "^0.4.13",
+    "async": "^2.6.2",
+    "download": "^7.1.0",
+    "rimraf": "^2.6.3",
+    "tslint": "^5.13.1",
+    "typescript": "^3.3.3333"
   },
-  "homepage": "https://github.com/markackert/dependency-license-scan#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "build": "tsc --pretty && tslint --format stylish -c ./tslint-packages.json \"src/**/*.ts\"",
+    "dryrun": "yarn build && node lib/index.js 2>&1 | tee output/log.txt"
+  },
   "devDependencies": {
-    "@octokit/rest": "16.13.1",
-    "@octokit/plugin-retry": "2.1.1",
-    "adm-zip": "0.4.13",
-    "async": "2.6.1",
-    "cross-spawn": "6.0.5",
-    "download": "7.1.0",
-    "rimraf": "2.6.3",
-    "simple-git": "1.107.0"
+    "@types/adm-zip": "^0.4.32",
+    "@types/async": "^2.4.1",
+    "@types/download": "^6.2.4",
+    "@types/node": "10.14.0",
+    "@types/rimraf": "^2.0.2"
   }
 }
