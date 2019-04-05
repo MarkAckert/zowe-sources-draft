@@ -1,3 +1,4 @@
 output/
 node_modules/
 resources/github_token.txt
+lib/

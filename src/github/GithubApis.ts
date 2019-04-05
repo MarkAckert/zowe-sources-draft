@@ -4,17 +4,24 @@ import { isNullOrUndefined } from "util";
 
 import * as fs from "fs";
 import { URL } from "url";
+import { url } from "inspector";
 
 export class GithubApis {
 
     public static getZipballUrl(repository: string, tTag: string): Promise<URL> {
         return new Promise<URL>((resolve, reject) => {
-            GithubApis.apiClient.repos.getReleaseByTag({ owner: "zowe", repo: repository, tag: tTag }).then((response) => {
-                if (!isNullOrUndefined(response.data)){
-                    resolve(new URL(response.data.zipball_url));
+            console.log(repository + "  " + tTag);
+            GithubApis.apiClient.paginate(`/repos/zowe/${repository}/tags`).then((response: Octokit.ReposListTagsResponse) => {
+                if (!isNullOrUndefined(response) && response.length > 0){
+                    for (const tagResponse of response){
+                        if (tagResponse.name === tTag) {
+                            resolve(new URL(tagResponse.zipball_url));
+                        }
+                    }
+                    reject(`Tag ${tTag} not found within the repository '${repository}'.`);
                 }
                 else {
-                    reject("Data does not exist on the response for " + repository + ":" + tTag);
+                    reject(`Received an empty response trying to list tags for the repository '${repository}'`);
                 }
             }).catch((rejected: any) => {
                 reject(rejected);

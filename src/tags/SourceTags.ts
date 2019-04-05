@@ -11,15 +11,25 @@ export class SourceTags {
      *
      *  Later on, should we consider parsing manifest files and querying GIT for matching tags?
      */
-    public static getRepositoriesWithTagsObject(): RepoTagMap {
-        const repositoryWithTag = this.getRepositoryTags();
-        const repoWithZipball: RepoTagMap = {};
-        Object.keys(repositoryWithTag).forEach((repoName) => {
-            GithubApis.getZipballUrl(repoName, repositoryWithTag[repoName]).then((zipballUrl: URL) => {
-                repoWithZipball[repoName] = zipballUrl;
+    public static getRepositoriesWithTagsObject(): Promise<RepoTagMap> {
+        return new Promise<RepoTagMap>((resolve, reject) => {
+            const repositoryWithTag = this.getRepositoryTags();
+            const repoWithZipball: RepoTagMap = {};
+            const zipballPromises: Array<Promise<any>> = [];
+            Object.keys(repositoryWithTag).forEach((repoName) => {
+                const zipPromise = GithubApis.getZipballUrl(repoName, repositoryWithTag[repoName]);
+                zipballPromises.push(zipPromise);
+                zipPromise.then((zipballUrl: URL) => {
+                    repoWithZipball[repoName] = zipballUrl;
+                });
+            });
+            Promise.all(zipballPromises).then((result) => {
+                // ignore result
+                resolve(repoWithZipball);
+            }).catch((error) => {
+                reject(error);
             });
         });
-        return repoWithZipball;
     }
 
     private static readonly STATIC_TAGS_FILE: string = "rules" + sep + "source_tags.json";
