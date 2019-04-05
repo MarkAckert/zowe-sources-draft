@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "tsc --pretty && tslint --format stylish -c ./tslint-packages.json \"src/**/*.ts\"",
-    "dryrun": "yarn build && node lib/index.js 2>&1 | tee output/log.txt"
+    "create": "yarn build && node lib/index.js 2>&1 | tee output/log.txt"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.4.32",
