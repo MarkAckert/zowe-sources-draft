@@ -12,8 +12,8 @@ export class GithubApis {
         return new Promise<URL>((resolve, reject) => {
             console.log(repository + "  " + tTag);
             GithubApis.apiClient.paginate(`/repos/zowe/${repository}/tags`).then((response: Octokit.ReposListTagsResponse) => {
-                if (!isNullOrUndefined(response) && response.length > 0){
-                    for (const tagResponse of response){
+                if (!isNullOrUndefined(response) && response.length > 0) {
+                    for (const tagResponse of response) {
                         if (tagResponse.name === tTag) {
                             resolve(new URL(tagResponse.zipball_url));
                         }
@@ -30,7 +30,8 @@ export class GithubApis {
         });
     }
 
-    private static API_TOKEN = fs.readFileSync("resources/github_token.txt").toString();
+    private static API_TOKEN = (!isNullOrUndefined(process.env.GITHUB_TOKEN
+        && process.env.GITHUB_TOKEN.length > 0) ? process.env.GITHUB_TOKEN : fs.readFileSync("resources/github_token.txt").toString());
     private static apiClient: Octokit = new Octokit({
         auth: `token ${GithubApis.API_TOKEN}`
     });
