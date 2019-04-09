@@ -31,7 +31,7 @@ export class GithubApis {
     }
 
     private static API_TOKEN = (!isNullOrUndefined(process.env.GITHUB_TOKEN)
-        && process.env.GITHUB_TOKEN.length > 0) ? process.env.GITHUB_TOKEN : fs.readFileSync("resources/github_token.txt").toString());
+        && process.env.GITHUB_TOKEN.length > 0) ? process.env.GITHUB_TOKEN : fs.readFileSync("resources/github_token.txt").toString();
     private static apiClient: Octokit = new Octokit({
         auth: `token ${GithubApis.API_TOKEN}`
     });
