@@ -21,6 +21,8 @@ export class SourceTags {
                 zipballPromises.push(zipPromise);
                 zipPromise.then((zipballUrl: URL) => {
                     repoWithZipball[repoName] = zipballUrl;
+                }).catch((error) => {
+                    console.log(error);
                 });
             });
             Promise.all(zipballPromises).then((result) => {
