@@ -1,11 +1,11 @@
 {
-    "explorer-api-common": "0.3.1",
-    "data-sets": "0.2.0",
-    "jobs": "0.2.2",
-    "explorer-ui-server": "v0.1.4",
-    "explorer-jes": "v0.0.18",
-    "explorer-mvs": "v0.0.13",
-    "explorer-uss": "v0.0.12",
+    "explorer-api-common": "0.3.2",
+    "data-sets": "v0.2.2",
+    "jobs": "0.2.4",
+    "explorer-ui-server": "v0.2.8",
+    "explorer-jes": "v0.0.21",
+    "explorer-mvs": "v0.0.15",
+    "explorer-uss": "v0.0.13",
     "orion-editor-component": "v0.0.9",
 
     "zlux-app-manager": "v1.2.0",
@@ -33,7 +33,7 @@
     "db-browser": "v1.0.0",
     "db-browser-db2": "v1.0.0",
 
-    "api-layer": "v1.1.1",
+    "api-layer": "v1.1.5",
     "imperative": "v2.4.1",
     
     "zowe-cli": "v2.20.1",
