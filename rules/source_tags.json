@@ -1,7 +1,7 @@
 {
     "explorer-api-common": "0.3.2",
     "data-sets": "v0.2.2",
-    "jobs": "0.2.4",
+    "jobs": "v0.2.4",
     "explorer-ui-server": "v0.2.8",
     "explorer-jes": "v0.0.21",
     "explorer-mvs": "v0.0.15",
