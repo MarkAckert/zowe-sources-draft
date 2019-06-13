@@ -28,7 +28,7 @@
     "zosmf-auth" : "v1.3.0",
     "zss-auth": "v1.3.0",
     "zss" : "v1.2.0",
-    "zowe-common-c" : "v1.2.0",
+    "zowe-common-c" : "zss-v1.3.0",
     "file-transfer-app": "v1.0.0",
     "db-browser": "v1.0.0",
     "db-browser-db2": "v1.0.0",
