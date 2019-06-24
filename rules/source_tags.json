@@ -34,9 +34,9 @@
     "db-browser-db2": "v1.0.0",
 
     "api-layer": "v1.1.5",
-    "imperative": "v2.4.4",
+    "imperative": "v2.4.8",
     
-    "zowe-cli": "v2.28.1",
+    "zowe-cli": "v2.28.2",
     "zowe-cli-cics-plugin": "v1.0.0",
     "zowe-cli-db2-plugin": "v2.1.0"
 }
