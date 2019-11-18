@@ -1,4 +1,4 @@
-# Source files for the Zowe project - version 1.6.0
+# Source files for the Zowe project - version 1.7.0
 
 Included in this zip file are the source files used to build the Zowe 1.6.0 Release.
 Each of the zip files are named with the commit number that is consistent with the 1.6.0
