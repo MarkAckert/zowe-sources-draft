@@ -1,5 +1,5 @@
 {
-    "explorer-api-common": "0.3.10",
+    "explorer-api-common": "v0.3.10",
     "data-sets": "v0.2.7",
     "jobs": "v0.2.11",
     "explorer-ui-server": "v0.2.11",
