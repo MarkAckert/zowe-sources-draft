@@ -3,6 +3,7 @@ import { sep } from "path";
 import { RepoTagMap } from "./RepoTagMap";
 import { GithubApis } from "../github/GithubApis";
 import { URL } from "url";
+import * as download from "download";
 
 export class SourceTags {
 
@@ -13,31 +14,52 @@ export class SourceTags {
      */
     public static getRepositoriesWithTagsObject(): Promise<RepoTagMap> {
         return new Promise<RepoTagMap>((resolve, reject) => {
-            const repositoryWithTag = this.getRepositoryTags();
-            const repoWithZipball: RepoTagMap = {};
-            const zipballPromises: Array<Promise<any>> = [];
-            Object.keys(repositoryWithTag).forEach((repoName) => {
-                const zipPromise = GithubApis.getZipballUrl(repoName, repositoryWithTag[repoName]);
-                zipballPromises.push(zipPromise);
-                zipPromise.then((zipballUrl: URL) => {
-                    repoWithZipball[repoName] = zipballUrl;
-                }).catch((error) => {
-                    console.log(error);
+            this.getRepositoryTagsFromManifest()
+                .then((repositoryWithTag) => {
+                    const repoWithZipball: RepoTagMap = {};
+                    const zipballPromises: Array<Promise<any>> = [];
+                    Object.keys(repositoryWithTag).forEach((repoName) => {
+                        const zipPromise = GithubApis.getZipballUrl(repoName, repositoryWithTag[repoName]);
+                        zipballPromises.push(zipPromise);
+                        zipPromise.then((zipballUrl: URL) => {
+                            repoWithZipball[repoName] = zipballUrl;
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    });
+                    Promise.all(zipballPromises).then((result) => {
+                        // ignore result
+                        resolve(repoWithZipball);
+                    }).catch((error) => {
+                        reject(error);
+                    });
                 });
-            });
-            Promise.all(zipballPromises).then((result) => {
-                // ignore result
-                resolve(repoWithZipball);
-            }).catch((error) => {
-                reject(error);
-            });
         });
     }
 
-    private static readonly STATIC_TAGS_FILE: string = "rules" + sep + "source_tags.json";
+    private static readonly STATIC_TAGS_MANIFEST_URL: string =
+        "https://raw.githubusercontent.com/zowe/zowe-install-packaging/rc/manifest.json.template";
 
-    private static getRepositoryTags(): { [key: string]: string } {
-        return this.tryParseJSON(fs.readFileSync(this.STATIC_TAGS_FILE).toString());
+    private static getRepositoryTagsFromManifest(): Promise<{ [key: string]: string }> {
+        const manifestUrl: string = process.env.ZOWE_MANIFEST_URL || this.STATIC_TAGS_MANIFEST_URL;
+        console.log(`Fetching ${manifestUrl}...`);
+        return new Promise<{ [key: string]: string }>((resolve, reject) => {
+            download(manifestUrl).then((data) => {
+                const manifestObj = this.tryParseJSON(data.toString());
+                if (!manifestObj || !manifestObj.sourceDependencies) {
+                    reject(new Error("Failed to parse manifest file"));
+                } else {
+                    const repoTags: { [key: string]: string } = {};
+                    for (const grp of manifestObj.sourceDependencies) {
+                        for (const entry of grp.entries) {
+                            repoTags[entry.repository] = entry.tag;
+                        }
+                    }
+
+                    resolve(repoTags);
+                }
+            });
+        });
     }
 
     // From Stackoverflow
