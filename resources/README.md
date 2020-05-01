@@ -1,8 +1,8 @@
-# Source files for the Zowe project - version 1.10.0
+# Source files for the Zowe project - version 1.11.0
 
-Included in this zip file are the source files used to build the Zowe 1.10.0 Release.
-Each of the zip files are named with the commit number that is consistent with the 1.10.0
-release of the Zowe 1.10.0 build.
+Included in this zip file are the source files used to build the Zowe 1.11.0 Release.
+Each of the zip files are named with the commit number that is consistent with the 1.11.0
+release of the Zowe 1.11.0 build.
 
 Included in the zip is the source from the repositories hosted at https://github.com/zowe.
 
